@@ -1,0 +1,5 @@
+//author
+MIN_INTEGER = 1;
+MAX_INTEGER = 10;
+
+export { MAX_INTEGER, MIN_INTEGER };
