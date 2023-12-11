@@ -32,4 +32,4 @@ const getMocks = function (idCount) {
   return result;
 };
 
-export { getMocks };
+export { getMocks, createOffer, createAuthor, createLocation };
