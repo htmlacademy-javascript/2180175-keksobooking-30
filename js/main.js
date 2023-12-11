@@ -1,3 +1,3 @@
 import { getMocks } from "./getting-data";
 
-console.log(getMocks(10))
+console.log(getMocks(10));
