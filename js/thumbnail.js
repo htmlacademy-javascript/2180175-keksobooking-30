@@ -1,8 +1,6 @@
-import{createOffer, createAuthor} from './getting-data';
-
 const thumbnailTemplate = document.querySelector('#card')
-.content
-.querySelector('.popup');
+  .content
+  .querySelector('.popup');
 
 const container = document.querySelector('#map-canvas');
 
@@ -23,10 +21,10 @@ thumbnail.querySelector('.popup__avatar').src = avatar;
 
 const renderThumbnails = (data) => {
   const fragment = document.createDocumentFragment();
-  data.forEach((data) => {
-    const thumbnail = createThumbnail(createOffer().title, createOffer().address, createOffer().price, createOffer().type,
-    createOffer().rooms, createOffer().guests, createOffer().checkin, createOffer().checkout,
-    createOffer().features, createOffer().features, createOffer().description, createOffer().photos, createAuthor().avatar);
+  data.forEach((miniature) => {
+    const thumbnail = createThumbnail(offer.title, offer.address, offer.price, offer.type,
+      offer.rooms, offer.guests, offer.checkin, offer.checkout,
+      offer.features, offer.features, offer.description, offer.photos, author.avatar);
     fragment.append(thumbnail);
   });
   container.append(fragment);

@@ -27,7 +27,11 @@ const createOffer = () => ({
 const getMocks = function (idCount) {
   const result = [];
   for (let i = 0; i < idCount; i++) {
-    result.push(createAuthor(), createOffer(), createLocation());
+    result.push({
+      author: createAuthor(),
+      offer: createOffer(),
+      location: createLocation()
+    });
   }
   return result;
 };
