@@ -1,8 +1,16 @@
 import { MIN_INTEGER, MAX_INTEGER, RANDOM_TITLES, MAX_PRICE, TIME, TYPES_VALUES, MAX_ROOMS, MAX_GUESTS, FEATURES, DESCRIPTION_BLOCK, PHOTOS } from './data.js';
 import { getRandomInteger, getRandomArrayElement, getArray } from './utils.js';
 
+const typeList = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель',
+};
+
 const createAuthor = () => ({
-  avatar: `img/avatars/user${getRandomInteger(MIN_INTEGER, MAX_INTEGER)}.png`,
+  avatar: `img/avatars/user0${getRandomInteger(MIN_INTEGER, MAX_INTEGER)}.png`,
 });
 
 const createLocation = () => ({
@@ -36,4 +44,4 @@ const getMocks = function (idCount) {
   return result;
 };
 
-export { getMocks, createOffer, createAuthor, createLocation };
+export { getMocks, typeList };

@@ -1,4 +1,9 @@
 import { getMocks } from './getting-data';
 import { renderThumbnails } from './thumbnail';
-console.log(getMocks(10));
-renderThumbnails(getMocks(10));
+import { onActiveInactiveState, onActiveForm, onActiveFilter } from './form';
+import { handlerLaunch, validateForm } from './user-form';
+renderThumbnails(getMocks(1));
+onActiveInactiveState();
+onActiveForm();
+handlerLaunch();
+validateForm();
