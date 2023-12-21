@@ -9,9 +9,17 @@ const typeList = {
   hotel: 'Отель',
 };
 
-const createAuthor = () => ({
-  avatar: `img/avatars/user0${getRandomInteger(MIN_INTEGER, MAX_INTEGER)}.png`,
-});
+const createAuthor = () => {
+  let randomIndexAuthor = getRandomInteger(MIN_INTEGER, MAX_INTEGER);
+
+  if (randomIndexAuthor.toString().length !== 2) {
+    randomIndexAuthor = `0${getRandomInteger(MIN_INTEGER, MAX_INTEGER)}`;
+  }
+
+  return {
+    avatar: (`img/avatars/user${randomIndexAuthor}.png`),
+  };
+};
 
 const createLocation = () => ({
   lat: getRandomInteger(35.65000, 35.70000),
