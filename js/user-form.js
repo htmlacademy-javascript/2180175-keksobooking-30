@@ -6,35 +6,51 @@ const priceinput = document.querySelector('#price');
 const timein = document.querySelector('#timein');
 const timeout = document.querySelector('#timeout');
 
-const addActivityItem = () => {
-  console.log()
+const zeroGuest = guestCount[3];
+const oneGuest = guestCount[2];
+const twoGuest = guestCount[1];
+const threeGuest = guestCount[0];
+
+const offSeatNumber = () => {
+  zeroGuest.disabled = true;
+  oneGuest.disabled = false;
+  twoGuest.disabled = true;
+  threeGuest.disabled = true;
+  oneGuest.selected = true;
 };
 
 const roomValue = () => {
-  const zeroGuest = guestCount[3];
-  const oneGuest = guestCount[2];
-  const twoGuest = guestCount[1];
-  const threeGuest = guestCount[0];
 
   if (roomNumber.value === '1') {
-    zeroGuest.remove();
-    twoGuest.remove();
-    threeGuest.remove();
+    zeroGuest.disabled = true;
+    oneGuest.disabled = false;
+    twoGuest.disabled = true;
+    threeGuest.disabled = true;
+    oneGuest.selected = true;
   }
 
   if (roomNumber.value === '2') {
-    threeGuest.remove();
-    zeroGuest.remove();
+    threeGuest.disabled = true;
+    zeroGuest.disabled = true;
+    oneGuest.disabled = false;
+    twoGuest.disabled = false;
+    twoGuest.selected = true;
   }
 
   if (roomNumber.value === '3') {
-    zeroGuest.remove();
+    zeroGuest.disabled = true;
+    oneGuest.disabled = false;
+    twoGuest.disabled = false;
+    threeGuest.disabled = false;
+    threeGuest.selected = true;
   }
 
   if (roomNumber.value === '100') {
-    oneGuest.remove();
-    twoGuest.remove();
-    threeGuest.remove();
+    oneGuest.disabled = true;
+    twoGuest.disabled = true;
+    threeGuest.disabled = true;
+    zeroGuest.disabled = false;
+    zeroGuest.selected = true;
   }
 };
 
@@ -91,5 +107,5 @@ const catchChange = () => {
   timeout.addEventListener('change', timeoutValue);
 };
 
-export { catchChange, addActivityItem };
+export { catchChange, offSeatNumber };
 
