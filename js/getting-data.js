@@ -1,5 +1,5 @@
 import { MIN_INTEGER, MAX_INTEGER, RANDOM_TITLES, MAX_PRICE, TIME, TYPES_VALUES, MAX_ROOMS, MAX_GUESTS, FEATURES, DESCRIPTION_BLOCK, PHOTOS } from './data.js';
-import { getRandomInteger, getRandomArrayElement, getArray } from './utils.js';
+import { getRandomInteger, getRandomArrayElement, getArray, getRandomFloat } from './utils.js';
 
 const typeList = {
   flat: 'Квартира',
@@ -21,10 +21,15 @@ const createAuthor = () => {
   };
 };
 
-const createLocation = () => ({
-  lat: getRandomInteger(35.65000, 35.70000),
-  lng: getRandomInteger(139.70000, 139.80000),
-});
+const createLocation = () => {
+  const lat = getRandomFloat(35.65, 35.7).toFixed(5);
+  const lng = getRandomFloat(139.7, 139.8).toFixed(5);
+  const location = {
+    lat,
+    lng
+  };
+  return location;
+};
 
 const createOffer = () => ({
   title: getRandomArrayElement(RANDOM_TITLES),

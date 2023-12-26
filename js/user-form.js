@@ -11,6 +11,20 @@ const oneGuest = guestCount[2];
 const twoGuest = guestCount[1];
 const threeGuest = guestCount[0];
 
+const prisitineValidate = () => {
+  const pristine = new Pristine(form);
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const valid = pristine.validate();
+    if (valid) {
+      form.submit();
+    } else {
+      alert('Форма заполена неверно')
+    }
+  });
+};
+
+
 const offSeatNumber = () => {
   zeroGuest.disabled = true;
   oneGuest.disabled = false;
@@ -19,39 +33,23 @@ const offSeatNumber = () => {
   oneGuest.selected = true;
 };
 
-const roomValue = () => {
-
-  if (roomNumber.value === '1') {
-    zeroGuest.disabled = true;
-    oneGuest.disabled = false;
-    twoGuest.disabled = true;
-    threeGuest.disabled = true;
-    oneGuest.selected = true;
-  }
-
-  if (roomNumber.value === '2') {
-    threeGuest.disabled = true;
-    zeroGuest.disabled = true;
-    oneGuest.disabled = false;
-    twoGuest.disabled = false;
-    twoGuest.selected = true;
-  }
-
-  if (roomNumber.value === '3') {
-    zeroGuest.disabled = true;
-    oneGuest.disabled = false;
-    twoGuest.disabled = false;
-    threeGuest.disabled = false;
-    threeGuest.selected = true;
-  }
-
-  if (roomNumber.value === '100') {
-    oneGuest.disabled = true;
-    twoGuest.disabled = true;
-    threeGuest.disabled = true;
-    zeroGuest.disabled = false;
-    zeroGuest.selected = true;
-  }
+const roomNumberValue = () => {
+  roomNumber.addEventListener('change', (evt) => {
+    const newValue = evt.target.value;
+    console.log('newValue - ', newValue);
+    const guestCountOptions = Array.from(guestCount.querySelectorAll('option'));
+    guestCountOptions.forEach(el => {
+      console.log(el)
+      if (newValue !== el.value) {
+        el.disabled = true;
+      } else {
+        el.disabled = false;
+      }
+      if (newValue === '2') {
+      }
+    });
+    guestCount.value = newValue;
+  });
 };
 
 const houseValue = () => {
@@ -101,10 +99,11 @@ const timeoutValue = () => {
 };
 
 const catchChange = () => {
-  roomNumber.addEventListener('change', roomValue);
   houseType.addEventListener('change', houseValue);
   timein.addEventListener('change', timeinValue);
   timeout.addEventListener('change', timeoutValue);
+  roomNumberValue();
+  prisitineValidate();
 };
 
 export { catchChange, offSeatNumber };
