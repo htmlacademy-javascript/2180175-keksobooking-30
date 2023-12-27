@@ -17,7 +17,7 @@ const createThumbnail = (order) => {
   thumbnail.querySelector('.popup__text--time').textContent = `Заезд после ${order.offer.checkin}, выезд до ${order.offer.checkout}`;
   thumbnail.querySelectorAll('.popup__feature').textContent = order.offer.features;
   thumbnail.querySelector('.popup__description').textContent = order.offer.description;
-  thumbnail.querySelector('.popup__photos').src = order.offer.photos;
+  thumbnail.querySelector('.popup__photo').src = order.offer.photos;
   thumbnail.querySelector('.popup__avatar').src = order.author.avatar;
 
   return thumbnail;

@@ -57,4 +57,4 @@ const getMocks = function (idCount) {
   return result;
 };
 
-export { getMocks, typeList };
+export { getMocks, typeList, createLocation, createOffer, createAuthor };
