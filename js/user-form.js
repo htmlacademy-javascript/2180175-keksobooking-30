@@ -33,6 +33,13 @@ const offSeatNumber = () => {
   oneGuest.selected = true;
 };
 
+const roomsGuestValue = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '0': ['0'],
+};
+
 const roomNumberValue = () => {
   roomNumber.addEventListener('change', (evt) => {
     const newValue = evt.target.value;
@@ -44,8 +51,6 @@ const roomNumberValue = () => {
         el.disabled = true;
       } else {
         el.disabled = false;
-      }
-      if (newValue === '2') {
       }
     });
     guestCount.value = newValue;

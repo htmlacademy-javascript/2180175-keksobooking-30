@@ -1,6 +1,5 @@
 import { onActiveInactiveState, onActiveForm } from './form';
 import { getRandomFloat } from './utils';
-import { typeList, createOffer, createAuthor } from './getting-data';
 const form = document.querySelector('.ad-form');
 const address = document.querySelector('#address');
 const TILE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -29,19 +28,19 @@ const startCoordinate = {
   lng: 139.4533
 };
 
-const createCustomPopup = (offer, author) => {
+const createCustomPopup = (data) => {
   const popup = document.querySelector('#card').content.querySelector('.popup');
   const popupElement = popup.cloneNode(true);
-  popupElement.querySelector('.popup__title').textContent = offer.title;
-  popupElement.querySelector('.popup__text--address').textContent = offer.address;
-  popupElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
-  popupElement.querySelector('.popup__type').textContent = typeList[offer.type];
-  popupElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} для ${offer.guests} гостей`;
-  popupElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
-  popupElement.querySelectorAll('.popup__feature').textContent = offer.features;
-  popupElement.querySelector('.popup__description').textContent = offer.description;
-  popupElement.querySelector('.popup__photo').src = offer.photos;
-  popupElement.querySelector('.popup__avatar').src = author.avatar;
+  popupElement.querySelector('.popup__title').textContent = data.offer.title;
+  popupElement.querySelector('.popup__text--address').textContent = data.offer.address;
+  popupElement.querySelector('.popup__text--price').textContent = `${data.offer.price} ₽/ночь`;
+  popupElement.querySelector('.popup__type').textContent = data.offer.type;
+  popupElement.querySelector('.popup__text--capacity').textContent = `${data.offer.rooms} для ${data.offer.guests} гостей`;
+  popupElement.querySelector('.popup__text--time').textContent = `Заезд после ${data.offer.checkin}, выезд до ${data.offer.checkout}`;
+  popupElement.querySelectorAll('.popup__feature').textContent = data.offer.features;
+  popupElement.querySelector('.popup__description').textContent = data.offer.description;
+  popupElement.querySelector('.popup__photo').src = data.offer.photos;
+  popupElement.querySelector('.popup__avatar').src = data.author.avatar;
 
   return popupElement;
 
@@ -128,5 +127,12 @@ points.forEach(({ lat, lng }) => {
   );
   markerDefault
     .addTo(map)
-    .bindPopup(createCustomPopup(createOffer(), createAuthor()));
+    .bindPopup(createCustomPopup());
 });
+
+fetch('https://30.javascript.pages.academy/keksobooking/data')
+  .then((response) => response.json())
+  .then((data) => {
+    console.log('Результат: ', data);
+  });
+
