@@ -129,10 +129,3 @@ points.forEach(({ lat, lng }) => {
     .addTo(map)
     .bindPopup(createCustomPopup());
 });
-
-fetch('https://30.javascript.pages.academy/keksobooking/data')
-  .then((response) => response.json())
-  .then((data) => {
-    console.log('Результат: ', data);
-  });
-
