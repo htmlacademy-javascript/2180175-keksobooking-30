@@ -1,3 +1,4 @@
+import { renderSuccess, renderError } from './Popup';
 const form = document.querySelector('.ad-form');
 const roomNumber = document.querySelector('#room_number');
 const guestCount = document.querySelector('#capacity');
@@ -16,11 +17,25 @@ const prisitineValidate = () => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const valid = pristine.validate();
-    if (valid) {
-      form.submit();
-    } else {
-      alert('Форма заполена неверно')
+    const formData = new FormData(evt.target);
+    if (!valid) {
+      alert('Форма заполнена неверно');
     }
+    fetch(
+      'https://30.javascript.pages.academ/keksobooking',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    )
+      .then((response) => {
+        if (response.ok) {
+          renderSuccess();
+        }
+      })
+      .catch(() => {
+        renderError();
+      });
   });
 };
 

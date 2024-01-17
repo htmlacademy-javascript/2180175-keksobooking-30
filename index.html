@@ -198,7 +198,13 @@
             <label class="ad-form__label" for="address"
               >Адрес (координаты)</label
             >
-            <input id="address" name="address" type="text" readonly />
+            <input
+              id="address"
+              name="address"
+              type="text"
+              value="35.55190, 139.45330"
+              readonly
+            />
           </fieldset>
           <fieldset class="ad-form__element">
             <label class="ad-form__label" for="type">Тип жилья</label>
@@ -468,6 +474,12 @@
       <div class="error">
         <p class="error__message">Ошибка размещения объявления</p>
         <button type="button" class="error__button">Попробовать снова</button>
+      </div>
+    </template>
+    <!-- Сообщение об ошибке получения данных -->
+    <template id="server-error">
+      <div class="server-error">
+        <p class="server-error-text">Не удалось получить данные с сервера</p>
       </div>
     </template>
     <script src="vendor/leaflet/leaflet.js"></script>
