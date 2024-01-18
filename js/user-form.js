@@ -1,4 +1,4 @@
-import { renderSuccess, renderError } from './Popup';
+import { renderSuccess, renderError } from './popup';
 const form = document.querySelector('.ad-form');
 const roomNumber = document.querySelector('#room_number');
 const guestCount = document.querySelector('#capacity');
@@ -22,7 +22,7 @@ const prisitineValidate = () => {
       alert('Форма заполнена неверно');
     }
     fetch(
-      'https://30.javascript.pages.academ/keksobooking',
+      'https://30.javascript.pages.academy/keksobooking',
       {
         method: 'POST',
         body: formData,
@@ -48,28 +48,35 @@ const offSeatNumber = () => {
   oneGuest.selected = true;
 };
 
-const roomsGuestValue = {
-  '1': ['1'],
-  '2': ['1', '2'],
-  '3': ['1', '2', '3'],
-  '0': ['0'],
-};
-
-const roomNumberValue = () => {
-  roomNumber.addEventListener('change', (evt) => {
-    const newValue = evt.target.value;
-    console.log('newValue - ', newValue);
-    const guestCountOptions = Array.from(guestCount.querySelectorAll('option'));
-    guestCountOptions.forEach(el => {
-      console.log(el)
-      if (newValue !== el.value) {
-        el.disabled = true;
-      } else {
-        el.disabled = false;
-      }
-    });
-    guestCount.value = newValue;
-  });
+const roomValue = () => {
+  if (roomNumber.value === '1') {
+    zeroGuest.disabled = true;
+    oneGuest.disabled = false;
+    twoGuest.disabled = true;
+    threeGuest.disabled = true;
+    oneGuest.selected = true;
+  }
+  if (roomNumber.value === '2') {
+    threeGuest.disabled = true;
+    zeroGuest.disabled = true;
+    oneGuest.disabled = false;
+    twoGuest.disabled = false;
+    twoGuest.selected = true;
+  }
+  if (roomNumber.value === '3') {
+    zeroGuest.disabled = true;
+    oneGuest.disabled = false;
+    twoGuest.disabled = false;
+    threeGuest.disabled = false;
+    threeGuest.selected = true;
+  }
+  if (roomNumber.value === '0') {
+    oneGuest.disabled = true;
+    twoGuest.disabled = true;
+    threeGuest.disabled = true;
+    zeroGuest.disabled = false;
+    zeroGuest.selected = true;
+  }
 };
 
 const houseValue = () => {
@@ -119,10 +126,11 @@ const timeoutValue = () => {
 };
 
 const catchChange = () => {
+  roomNumber.addEventListener('change', roomValue);
   houseType.addEventListener('change', houseValue);
   timein.addEventListener('change', timeinValue);
   timeout.addEventListener('change', timeoutValue);
-  roomNumberValue();
+  roomValue();
   prisitineValidate();
 };
 

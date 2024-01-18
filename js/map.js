@@ -1,9 +1,7 @@
-import { onActiveInactiveState, onActiveForm, onActiveFilter } from './form';
+import { onActiveForm } from './form';
 import { getData } from './network';
-import { renderSuccess } from './Popup';
 const form = document.querySelector('.ad-form');
 const address = document.querySelector('#address');
-const resetButton = document.querySelector('.ad-form__reset');
 const TILE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const COPYRIGHT = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const iconConfig = {
@@ -50,7 +48,6 @@ const createCustomPopup = ({ offer, author }) => {
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    onActiveInactiveState();
     onActiveForm();
   })
   .setView(cityCenter, ZOOM);
@@ -86,15 +83,15 @@ marker.on('moveend', (evt) => {
 });
 
 form.addEventListener('submit', () => {
-  mainPinIcon.setLatLng(startCoordinate);
-  map.setView(cityCenter, ZOOM);
-});
-
-
-resetButton.addEventListener('click', () => {
   marker.setLatLng(startCoordinate);
   map.setView(cityCenter, ZOOM);
 });
+
+const resetMap = () => {
+  marker.setLatLng(startCoordinate);
+  map.setView(cityCenter, ZOOM);
+  map.closePopup();
+};
 
 const firstData = getData.slice(0, 10);
 
@@ -116,3 +113,5 @@ const asyncGet = async () => {
 };
 
 asyncGet();
+
+export { resetMap };
