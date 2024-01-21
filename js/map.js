@@ -114,4 +114,4 @@ const asyncGet = async () => {
 
 asyncGet();
 
-export { resetMap };
+export { resetMap, firstData };

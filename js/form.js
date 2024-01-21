@@ -21,6 +21,7 @@ const onActiveFilter = () => {
 
 resetButton.addEventListener('click', () => {
   resetMap();
+  mapForm.reset();
 });
 
 
