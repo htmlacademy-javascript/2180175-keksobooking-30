@@ -1,9 +1,12 @@
 import { onActiveForm } from './form';
 import { getData } from './network';
+import { debounce } from './utils';
 const form = document.querySelector('.ad-form');
 const address = document.querySelector('#address');
 const TILE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const COPYRIGHT = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const TIMEOUT = 500;
+
 const iconConfig = {
   url: './img/main-pin.svg',
   width: 52,
@@ -19,11 +22,11 @@ const iconConfigDefault = {
   anchorY: 40,
 };
 const ZOOM = 10;
-const cityCenter = {
+const CITYCENTER = {
   lat: 35.5519,
   lng: 139.4533
 };
-const startCoordinate = {
+const STARTCOORDINATE = {
   lat: 35.5519,
   lng: 139.4533
 };
@@ -50,7 +53,7 @@ const map = L.map('map-canvas')
   .on('load', () => {
     onActiveForm();
   })
-  .setView(cityCenter, ZOOM);
+  .setView(CITYCENTER, ZOOM);
 
 L.tileLayer(TILE_LAYER, {
   attribution: COPYRIGHT
@@ -68,14 +71,14 @@ const DefaultPinIcon = L.icon({
   iconAnchor: [iconConfigDefault.anchorX, iconConfigDefault.anchorY],
 });
 
-const marker = L.marker(startCoordinate, {
+const marker = L.marker(STARTCOORDINATE, {
   draggable: true,
   icon: mainPinIcon,
 });
 
 marker.addTo(map);
 
-address.value = `${cityCenter.lat.toFixed(5)}, ${cityCenter.lng.toFixed(5)}`;
+address.value = `${CITYCENTER.lat.toFixed(5)}, ${CITYCENTER.lng.toFixed(5)}`;
 
 marker.on('moveend', (evt) => {
   const coordinate = evt.target.getLatLng();
@@ -83,21 +86,31 @@ marker.on('moveend', (evt) => {
 });
 
 form.addEventListener('submit', () => {
-  marker.setLatLng(startCoordinate);
-  map.setView(cityCenter, ZOOM);
+  marker.setLatLng(STARTCOORDINATE);
+  map.setView(CITYCENTER, ZOOM);
 });
 
 const resetMap = () => {
-  marker.setLatLng(startCoordinate);
-  map.setView(cityCenter, ZOOM);
+  marker.setLatLng(STARTCOORDINATE);
+  map.setView(CITYCENTER, ZOOM);
   map.closePopup();
 };
 
-const firstData = getData.slice(0, 10);
+const data = getData;
+let blueMarkersLayer = [];
 
-const asyncGet = async () => {
-  firstData.forEach((el) => {
-    const markerDefault = L.marker(
+const firstRender = async () => {
+  const allData = data.slice(0, 10);
+  render(allData);
+};
+
+const render = (arr) => {
+  blueMarkersLayer.forEach(el => {
+    map.removeLayer(el);
+  });
+  blueMarkersLayer = [];
+  arr.forEach((el) => {
+    const blueMarker = L.marker(
       {
         lat: el.location.lat,
         lng: el.location.lng,
@@ -106,12 +119,36 @@ const asyncGet = async () => {
         icon: DefaultPinIcon,
       },
     );
-    markerDefault
+    blueMarker
       .addTo(map)
       .bindPopup(createCustomPopup(el));
+    blueMarkersLayer.push(blueMarker);
   });
 };
 
-asyncGet();
+firstRender();
 
-export { resetMap, firstData };
+const renderUpdate = (obj) => {
+  console.log(obj)
+  let filtered;
+  if (obj['housing-type'] !== 'any') {
+    filtered = data.filter(el => el.offer.type === obj['housing-type']);
+  }
+
+  if (obj['housing-price'] !== 'any') {
+    filtered = (filtered || data).filter(el => el.offer.price === obj['housing-price']);
+    console.log(obj['housing-price'])
+  }
+
+  if (obj['housing-rooms'] !== 'any') {
+    filtered = (filtered || data).filter(el => el.offer.rooms === Number(obj['housing-rooms']));
+  }
+
+  if (obj['housing-guests'] !== 'any') {
+    filtered = (filtered || data).filter(el => el.offer.guests === Number(obj['housing-guests']));
+  }
+
+  render((filtered || data).slice(0, 10));
+};
+
+export { resetMap, renderUpdate };
