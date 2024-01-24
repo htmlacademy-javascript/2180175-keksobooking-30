@@ -36,7 +36,10 @@ resetButton.addEventListener('click', () => {
 mapForm.addEventListener('change', (evt) => {
   const fieldName = evt.target.name;
   baseMapFilter[fieldName] = evt.target.value;
-  renderUpdate(baseMapFilter);
+  debounce(renderUpdate(baseMapFilter), TIMEOUT);
+  /* Почему то в данном месте если повесить debounce, то фильтры вовсе
+  перестают работать, а если убрать () => то фильтры заново начинают
+  работать но не какой заддержки между действиями не появляется */
 });
 
 

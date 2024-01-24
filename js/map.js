@@ -138,6 +138,7 @@ const renderUpdate = (obj) => {
   if (obj['housing-price'] !== 'any') {
     filtered = (filtered || data).filter(el => el.offer.price === obj['housing-price']);
     console.log(obj['housing-price'])
+    // В данном случае мне не понятно как мне сделать так, чтобы он слова midlle, low и тд превращал в цифры и потом прогонялся по ним, то есть по диапазону
   }
 
   if (obj['housing-rooms'] !== 'any') {
@@ -146,6 +147,11 @@ const renderUpdate = (obj) => {
 
   if (obj['housing-guests'] !== 'any') {
     filtered = (filtered || data).filter(el => el.offer.guests === Number(obj['housing-guests']));
+  }
+
+  if (obj['housing-features'] !== 'any') {
+    filtered = (filtered || data).filter(el => el.offer.features === obj['housing-features']);
+    //Это тоже не работает
   }
 
   render((filtered || data).slice(0, 10));
