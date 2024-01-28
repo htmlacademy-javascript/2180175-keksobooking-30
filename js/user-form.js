@@ -97,7 +97,7 @@ const houseValue = () => {
   }
 };
 
-const timeinValue = () => {
+const onTimeinValue = () => {
   if (timein.value === '12:00') {
     timeout.value = '12:00';
   }
@@ -111,7 +111,7 @@ const timeinValue = () => {
   }
 };
 
-const timeoutValue = () => {
+const onTimeoutValue = () => {
   if (timeout.value === '12:00') {
     timein.value = '12:00';
   }
@@ -128,8 +128,8 @@ const timeoutValue = () => {
 const catchChange = () => {
   roomNumber.addEventListener('change', roomValue);
   houseType.addEventListener('change', houseValue);
-  timein.addEventListener('change', timeinValue);
-  timeout.addEventListener('change', timeoutValue);
+  timein.addEventListener('change', onTimeinValue);
+  timeout.addEventListener('change', onTimeoutValue);
   roomValue();
   prisitineValidate();
 };

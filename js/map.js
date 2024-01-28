@@ -1,11 +1,17 @@
 import { onActiveForm } from './form';
 import { getData } from './network';
-import { debounce } from './utils';
 const form = document.querySelector('.ad-form');
+const featuresFieldset = document.querySelector('#housing-features');
 const address = document.querySelector('#address');
 const TILE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const COPYRIGHT = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-const TIMEOUT = 500;
+
+const PRICE = {
+  'any': {min: 0, max: 100000},
+  'low': {min: 0, max: 10000},
+  'middle': {min: 10000, max: 50000},
+  'high': {min: 50000, max: 100000},
+};
 
 const iconConfig = {
   url: './img/main-pin.svg',
@@ -21,14 +27,14 @@ const iconConfigDefault = {
   anchorX: 20,
   anchorY: 40,
 };
-const ZOOM = 10;
+const ZOOM = 12;
 const CITYCENTER = {
-  lat: 35.5519,
-  lng: 139.4533
+  lat: 35.68212,
+  lng: 139.73581
 };
 const STARTCOORDINATE = {
-  lat: 35.5519,
-  lng: 139.4533
+  lat: 35.68212,
+  lng: 139.73581
 };
 
 const createCustomPopup = ({ offer, author }) => {
@@ -136,9 +142,8 @@ const renderUpdate = (obj) => {
   }
 
   if (obj['housing-price'] !== 'any') {
-    filtered = (filtered || data).filter(el => el.offer.price === obj['housing-price']);
-    console.log(obj['housing-price'])
-    // В данном случае мне не понятно как мне сделать так, чтобы он слова midlle, low и тд превращал в цифры и потом прогонялся по ним, то есть по диапазону
+    filtered = (filtered || data).filter(el => el.offer.price <= PRICE[obj['housing-price']].max && el.offer.price > PRICE[obj['housing-price']].min);
+    console.log(PRICE[obj['housing-price']])
   }
 
   if (obj['housing-rooms'] !== 'any') {
@@ -150,8 +155,9 @@ const renderUpdate = (obj) => {
   }
 
   if (obj['housing-features'] !== 'any') {
-    filtered = (filtered || data).filter(el => el.offer.features === obj['housing-features']);
-    //Это тоже не работает
+    const x = Array.from(featuresFieldset.querySelectorAll('input[name ="features"]:checked'), (input) => input.value);
+    console.log(1);
+    filtered = (filtered || data).filter(x.forEach((element) => el => el.offer.features === element));
   }
 
   render((filtered || data).slice(0, 10));
