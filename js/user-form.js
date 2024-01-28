@@ -22,7 +22,7 @@ const prisitineValidate = () => {
       alert('Форма заполнена неверно');
     }
     fetch(
-      'https://30.javascript.pages.academy/keksobooking',
+      'https://30.javascript.htmlacademy.pro/keksobooking',
       {
         method: 'POST',
         body: formData,

@@ -1064,3 +1064,8 @@ fieldset {
   margin: 0;
   width: 100%;
 }
+
+.ad-form__photo-main {
+  width: 100%;
+  height: 100%;
+}

@@ -2,7 +2,7 @@ import { onActiveFilter } from './form';
 import { renderServerError } from './popup';
 
 const getData = await fetch(
-  'https://30.javascript.pages.academy/keksobooking/data',
+  'https://30.javascript.htmlacademy.pro/keksobooking/data',
   {
     method: 'GET',
   })
