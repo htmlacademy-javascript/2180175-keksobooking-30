@@ -111,8 +111,9 @@ const resetMap = () => {
 const data = getData;
 let blueMarkersLayer = [];
 
+const allData = data.slice(0, 10);
+
 const firstRender = async () => {
-  const allData = data.slice(0, 10);
   render(allData);
 };
 
@@ -151,4 +152,4 @@ const renderUpdate = () => {
     .slice(0, 10));
 };
 
-export { resetMap, renderUpdate };
+export { resetMap, renderUpdate, render, allData };

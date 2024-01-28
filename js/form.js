@@ -1,4 +1,4 @@
-import { resetMap, renderUpdate } from './map';
+import { resetMap, renderUpdate, render, allData } from './map';
 import { debounce } from './utils';
 const TIMEOUT = 500;
 const form = document.querySelector('.ad-form');
@@ -24,6 +24,7 @@ const onActiveFilter = () => {
 resetButton.addEventListener('click', () => {
   resetMap();
   mapForm.reset();
+  render(allData);
 });
 
 const onChange = () => {

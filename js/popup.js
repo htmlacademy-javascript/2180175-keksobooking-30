@@ -3,15 +3,18 @@ const serverErrorForm = document.querySelector('#server-error');
 const errorForm = document.querySelector('#error');
 const body = document.querySelector('body');
 const resetButton = document.querySelector('.ad-form__reset');
+const publicButton = document.querySelector('.ad-form__submit');
 
 const renderSuccess = () => {
   const successPopup = successForm.content;
   const successPopupElement = successPopup.cloneNode(true);
   body.append(successPopupElement);
   const successBox = document.querySelector('.success');
+  publicButton.disabled = true;
 
   const closeSuccess = () => {
     successBox.remove();
+    publicButton.disabled = false;
   };
 
   const OnSuccessPopupKeydown = (evt) => {
@@ -39,9 +42,11 @@ const renderError = () => {
   body.append(errorPopupElement);
   const errorBox = document.querySelector('.error');
   const errorButton = document.querySelector('.error__button');
+  publicButton.disabled = true;
 
   const errorButtonClick = () => {
     errorBox.remove();
+    publicButton.disabled = false;
   };
 
   const OnErrorButtonClick = () => {
