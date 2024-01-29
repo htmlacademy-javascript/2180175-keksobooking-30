@@ -13,29 +13,32 @@ const twoGuest = guestCount[1];
 const threeGuest = guestCount[0];
 
 const prisitineValidate = () => {
-  const pristine = new Pristine(form);
+  const pristine = new Pristine(form, {
+    classTo: 'ad-form__element',
+    errorTextParent: 'ad-form__element',
+    errorClass: 'ad-form__element--invalid'
+  });
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const valid = pristine.validate();
     const formData = new FormData(evt.target);
-    if (!valid) {
-      alert('Форма заполнена неверно');
+    if (valid) {
+      fetch(
+        'https://30.javascript.htmlacademy.pro/keksobooking',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      )
+        .then((response) => {
+          if (response.ok) {
+            renderSuccess();
+          }
+        })
+        .catch(() => {
+          renderError();
+        });
     }
-    fetch(
-      'https://30.javascript.htmlacademy.pro/keksobooking',
-      {
-        method: 'POST',
-        body: formData,
-      },
-    )
-      .then((response) => {
-        if (response.ok) {
-          renderSuccess();
-        }
-      })
-      .catch(() => {
-        renderError();
-      });
   });
 };
 
